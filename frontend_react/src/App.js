@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ExampleButtons from './pages/ExampleButtons';
 
 // PUBLIC_INTERFACE
 function App() {
@@ -42,6 +43,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <ExampleButtons />
     </div>
   );
 }

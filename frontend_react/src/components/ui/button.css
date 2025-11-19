@@ -1,0 +1,122 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.14s;
+  outline: none;
+  min-width: 2.5em;
+  font-family: inherit;
+  position: relative;
+  line-height: 1.25;
+  user-select: none;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Sizes */
+.btn--sm { font-size: 0.87rem; padding: 0.36em 1em; }
+.btn--md { font-size: 1rem; padding: 0.52em 1.4em; }
+.btn--lg { font-size: 1.16rem; padding: 0.75em 2em; }
+
+/* Variants */
+.btn--primary {
+  background: #3b82f6;
+  color: #fff;
+  box-shadow: 0 1px 2px 0 #3b82f699;
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: #2563eb;
+}
+.btn--primary:active {
+  background: #2563eb;
+  transform: scale(0.98);
+}
+.btn--primary:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+.btn--secondary {
+  background: #64748b;
+  color: #fff;
+}
+.btn--secondary:hover,
+.btn--secondary:focus-visible {
+  background: #475569;
+}
+.btn--secondary:active {
+  background: #334155;
+}
+.btn--secondary:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #3b82f6;
+  border: 2px solid #3b82f6;
+}
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  background: #e0f2fe;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+.btn--ghost:active {
+  background: #bae6fd;
+  color: #2563eb;
+}
+.btn--ghost:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Disabled & Loading */
+.btn--disabled,
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Spinner */
+.btn__spinner {
+  display: inline-flex;
+  margin-right: 0.5em;
+}
+.btn__spinner-circle {
+  width: 1em;
+  height: 1em;
+  border: 2.5px solid #fff;
+  border-top: 2.5px solid #06b6d4;
+  border-radius: 50%;
+  animation: btn-spinner 0.85s linear infinite;
+  display: inline-block;
+}
+.btn--secondary .btn__spinner-circle { border-top: 2.5px solid #3b82f6; }
+.btn--ghost .btn__spinner-circle { border-top: 2.5px solid #3b82f6; border: 2.5px solid #3b82f6;}
+@keyframes btn-spinner {
+  0%   { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+/* Focus visible: accessible ring */
+.btn:focus-visible {
+  z-index: 1;
+}
+
+/* High-contrast for accessibility */
+@media (forced-colors: active) {
+  .btn, .btn:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
