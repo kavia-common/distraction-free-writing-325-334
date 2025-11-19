@@ -2,6 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
 
+// Dummy Icon for testing
+const DummyIcon = () => <svg role="img" data-testid="icon" height={18}><rect width={18} height={18} fill="green" /></svg>;
+
 // PUBLIC_INTERFACE
 describe('Button', () => {
   it('renders with default (primary) variant and medium size', () => {
@@ -50,5 +53,41 @@ describe('Button', () => {
     render(<Button ariaLabel="Custom Label">X</Button>);
     const btn = screen.getByRole('button', { name: "Custom Label" });
     expect(btn).toBeInTheDocument();
+  });
+
+  it('renders with squared prop (blocky look)', () => {
+    render(<Button squared>SquaredButton</Button>);
+    const btn = screen.getByRole('button', { name: /squaredbutton/i });
+    expect(btn.className).toMatch(/btn--squared/);
+  });
+
+  it('renders with block and elevate props', () => {
+    render(<Button block elevate>BlockElevate</Button>);
+    const btn = screen.getByRole('button', { name: /blockelevate/i });
+    expect(btn.className).toMatch(/btn--block/);
+    expect(btn.className).toMatch(/btn--elevate/);
+  });
+
+  it('renders with left icon', () => {
+    render(<Button icon={<DummyIcon />} >LeftIcon</Button>);
+    const icon = screen.getByTestId("icon");
+    expect(icon).toBeInTheDocument();
+    const btn = screen.getByRole('button', { name: /lefticon/i });
+    expect(btn.querySelector('.btn__icon')).toBeInTheDocument();
+  });
+
+  it('renders with right icon', () => {
+    render(<Button iconRight={<DummyIcon />} >RightIcon</Button>);
+    const icon = screen.getByTestId("icon");
+    expect(icon).toBeInTheDocument();
+    const btn = screen.getByRole('button', { name: /righticon/i });
+    expect(btn.querySelector('.btn__icon--right')).toBeInTheDocument();
+  });
+
+  it('render both icons when icon and iconRight present', () => {
+    render(<Button icon={<DummyIcon />} iconRight={<DummyIcon />}>BothIcons</Button>);
+    const btn = screen.getByRole('button', { name: /bothicons/i });
+    expect(btn.querySelector('.btn__icon')).toBeInTheDocument();
+    expect(btn.querySelector('.btn__icon--right')).toBeInTheDocument();
   });
 });
