@@ -18,9 +18,16 @@ export default function ExampleButtons() {
     <main style={{ maxWidth: 650, margin: "2rem auto", padding: "2rem" }}>
       <h2 style={{marginBottom: 12}}>Button Variants & <span style={{color: "#3b82f6"}}>Lego Style</span> Examples</h2>
       <div style={{ display: "flex", gap: "1em", flexWrap: "wrap", marginBottom: "2rem" }}>
+        {/* Traditional children usage */}
         <Button>Primary</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="ghost">Ghost</Button>
+        {/* New 'text' prop (label only) */}
+        <Button text="Text Primary" />
+        <Button variant="secondary" text="Text Secondary" />
+        <Button variant="ghost" text="Text Ghost" />
+        {/* Both children+text: children takes precedence */}
+        <Button text="Text Prop Overwritten">Child Precedence</Button>
       </div>
 
       <h4 style={{margin: "1.5em 0 0.5em"}}>Sizes</h4>

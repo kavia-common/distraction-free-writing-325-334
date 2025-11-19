@@ -1,16 +1,18 @@
 import React from "react";
 import "./button.css";
 
-// PUBLIC_INTERFACE
 /**
  * Button component with variant, size, disabled/loading, and accessibility.
  *
+ * PUBLIC_INTERFACE
  * Props:
  * - variant: "primary" | "secondary" | "ghost"
  * - size: "sm" | "md" | "lg"
  * - disabled: boolean
  * - loading: boolean
  * - children: ReactNode
+ * - text?: string [NEW] — Button label (rendered if children not present)
+ *    - If both text and children are supplied, children take precedence.
  * - onClick: function
  * - type: "button" | "submit" | "reset"
  * - ariaLabel: string (accessible text label)
@@ -19,6 +21,8 @@ import "./button.css";
  * - elevate?: boolean (shows pronounced lego-like shadow layers)
  * - icon?: ReactNode (icon at left)
  * - iconRight?: ReactNode (icon at right)
+ *
+ * Precedence: If both children and text are specified, children are rendered.
  */
 export const Button = ({
   variant = "primary",
@@ -26,6 +30,7 @@ export const Button = ({
   disabled = false,
   loading = false,
   children,
+  text,
   onClick,
   type = "button",
   ariaLabel,
@@ -53,8 +58,18 @@ export const Button = ({
     .filter(Boolean)
     .join(" ");
 
-  // Use aria-label for accessibility if provided, else use children as content label
-  const _ariaLabel = ariaLabel || (typeof children === "string" ? children : undefined);
+  // Determine what to render as label inside the button (children takes precedence)
+  let labelContent;
+  if (children !== undefined && children !== null) {
+    labelContent = children;
+  } else if (text !== undefined && text !== null) {
+    labelContent = text;
+  } else {
+    labelContent = null;
+  }
+
+  // Use aria-label for accessibility if provided, else use string labelContent for label
+  const _ariaLabel = ariaLabel || (typeof labelContent === "string" ? labelContent : undefined);
 
   return (
     <button
@@ -79,7 +94,7 @@ export const Button = ({
         <span className="btn__icon" aria-hidden="true">{icon}</span>
       )}
       <span className="btn__content" style={{ opacity: loading ? 0.5 : 1 }}>
-        {children}
+        {labelContent}
       </span>
       {/* Render right icon if present */}
       {iconRight && !loading && (

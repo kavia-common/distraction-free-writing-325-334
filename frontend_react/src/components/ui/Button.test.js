@@ -5,7 +5,6 @@ import { Button } from './Button';
 // Dummy Icon for testing
 const DummyIcon = () => <svg role="img" data-testid="icon" height={18}><rect width={18} height={18} fill="green" /></svg>;
 
-// PUBLIC_INTERFACE
 describe('Button', () => {
   it('renders with default (primary) variant and medium size', () => {
     render(<Button>Primary</Button>);
@@ -13,6 +12,40 @@ describe('Button', () => {
     expect(btn).toBeInTheDocument();
     expect(btn.className).toMatch(/btn--primary/);
     expect(btn.className).toMatch(/btn--md/);
+  });
+
+  it('renders with just text prop (label content only)', () => {
+    render(<Button text="Save changes" />);
+    const btn = screen.getByRole('button', { name: /save changes/i });
+    expect(btn).toBeInTheDocument();
+    expect(btn.textContent).toBe('Save changes');
+  });
+
+  it('renders with children only (no text)', () => {
+    render(<Button>ChildrenOnly</Button>);
+    const btn = screen.getByRole('button', { name: /childrenonly/i });
+    expect(btn).toBeInTheDocument();
+    expect(btn.textContent).toBe('ChildrenOnly');
+  });
+
+  it('renders children in preference to text prop (children takes precedence)', () => {
+    render(<Button text="TextOnly">ChildLabel</Button>);
+    const btn = screen.getByRole('button', { name: /childlabel/i });
+    expect(btn.textContent).toBe('ChildLabel');
+    expect(btn).not.toHaveTextContent('TextOnly');
+  });
+
+  it('renders with just text prop when children is null', () => {
+    render(<Button text="Text Label">{null}</Button>);
+    const btn = screen.getByRole('button', { name: /text label/i });
+    expect(btn).toBeInTheDocument();
+    expect(btn.textContent).toBe('Text Label');
+  });
+
+  it('renders with empty children and no text', () => {
+    render(<Button></Button>);
+    const btn = screen.getByRole('button');
+    expect(btn.textContent).toBe('');
   });
 
   it('renders other variants and sizes', () => {
